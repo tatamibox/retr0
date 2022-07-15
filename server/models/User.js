@@ -10,7 +10,9 @@ const userSchema = new Schema({
     localId: {
         type: String,
         required: true
-    }
+    },
+    products: [{ type: Schema.Types.ObjectId, ref: 'Product' }]
+
 })
 
 const User = mongoose.model("User", userSchema)
