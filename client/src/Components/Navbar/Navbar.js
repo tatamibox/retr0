@@ -9,7 +9,6 @@ const Navbar = () => {
 
     const authCtx = useContext(AuthContext);
     const isLoggedIn = authCtx.isLoggedIn;
-    console.log(isLoggedIn)
 
     if (isLoggedIn) {
         axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${process.env.REACT_APP_FIREBASE_AUTH}`, {
@@ -30,19 +29,21 @@ const Navbar = () => {
 
     return (
         <Fragment>
-            <nav className="navbar__container d-flex flex-row justify-content-between my-4">
-                <div className="logo mx-3">retr0</div>
-                <div className="navbar__links gap-3 d-flex flex-row mx-3">
+            <nav className={styles.navbar__container}>
+                <div className={`${styles.logo}`}>retr0</div>
+                <input type='text' className={`${styles.search__bar}`} placeholder='Search'></input>
+                <div className={styles.navbar__links}>
                     {!authCtx.isLoggedIn && (
                         <>
                             <div className="signup"><a href='/signup'>Sign
-                                Up</a></div>
+                                Up</a>
+                            </div>
                             <div className="login"><a href='/login'>Log in</a></div>
                         </>
 
                     )}
 
-                    {authCtx.isLoggedIn && (<><div>{currentUser}</div><div className="logout"><a href='/' onClick={authCtx.logout}>Log out</a></div></>)}
+                    {authCtx.isLoggedIn && (<><a href="/post" className="btn btn-outline-dark">Post</a><div>{currentUser}</div><div className="logout"><a href='/' onClick={authCtx.logout}>Log out</a></div></>)}
 
                 </div>
             </nav>
