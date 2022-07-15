@@ -53,9 +53,23 @@ app.post('/uploadProduct', catchAsync(async (req, res) => {
     await newProduct.save();
     const currentUser = await User.findOne({ username: username })
 
-
     currentUser.products.push(newProduct);
     currentUser.save();
 
+}))
 
+app.post('/findByUser', catchAsync(async (req, res) => {
+    const { username } = req.body;
+    const foundUser = await User.findOne({ username: username })
+    res.json({ foundUser })
+}))
+
+app.post('/getUserProducts', catchAsync(async (req, res) => {
+    const { totalProducts } = req.body;
+    let imageArray = []
+    for (let product of totalProducts) {
+        const thisProduct = await Product.findById(product)
+        imageArray.push(thisProduct.imageURL)
+    }
+    res.json(imageArray)
 }))

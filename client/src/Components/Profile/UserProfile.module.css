@@ -1,0 +1,23 @@
+.image__container {
+    display: flex;
+    margin: 5rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+
+.image__container img {
+    width: 500px;
+    height: 500px;
+    margin: 4rem;
+    object-fit: cover;
+
+}
+
+.usernameHeader {
+    text-align: center;
+    margin-top: 4rem;
+    margin-bottom: -4rem;
+
+}

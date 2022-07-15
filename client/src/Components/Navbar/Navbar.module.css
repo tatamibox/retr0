@@ -1,5 +1,7 @@
 .logo {
     font-size: 2rem;
+    text-decoration: none;
+    color: black;
 }
 
 .navbar__container {

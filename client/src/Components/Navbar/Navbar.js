@@ -22,6 +22,7 @@ const Navbar = () => {
                     })
             })
 
+
     }
 
 
@@ -30,7 +31,7 @@ const Navbar = () => {
     return (
         <Fragment>
             <nav className={styles.navbar__container}>
-                <div className={`${styles.logo}`}>retr0</div>
+                <div className={`${styles.logo}`}><a className={styles.logo} href="/">retr0</a></div>
                 <input type='text' className={`${styles.search__bar}`} placeholder='Search'></input>
                 <div className={styles.navbar__links}>
                     {!authCtx.isLoggedIn && (
