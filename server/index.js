@@ -4,6 +4,7 @@ const app = express();
 const axios = require('axios');
 const User = require('./models/User')
 const Product = require('./models/Product')
+const Comment = require('./models/Comment')
 
 const dotenv = require('dotenv');
 require('dotenv').config();
@@ -66,10 +67,19 @@ app.post('/findByUser', catchAsync(async (req, res) => {
 
 app.post('/getUserProducts', catchAsync(async (req, res) => {
     const { totalProducts } = req.body;
-    let imageArray = []
+    let productArray = []
     for (let product of totalProducts) {
         const thisProduct = await Product.findById(product)
-        imageArray.push(thisProduct.imageURL)
+        console.log(thisProduct)
+        const p = { imageURL: thisProduct.imageURL, price: thisProduct.price, name: thisProduct.name, id: thisProduct._id }
+        productArray.push(p)
     }
-    res.json(imageArray)
+    res.json(productArray)
+}))
+
+app.post('/getProduct', catchAsync(async (req, res) => {
+    const { id } = req.body;
+    console.log(id)
+    const product = await Product.findById(id);
+    res.json(product)
 }))

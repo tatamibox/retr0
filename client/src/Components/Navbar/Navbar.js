@@ -44,7 +44,7 @@ const Navbar = () => {
 
                     )}
 
-                    {authCtx.isLoggedIn && (<><a href="/post" className="btn btn-outline-dark">Post</a><div>{currentUser}</div><div className="logout"><a href='/' onClick={authCtx.logout}>Log out</a></div></>)}
+                    {authCtx.isLoggedIn && (<><a href="/post" className="btn btn-outline-dark">Post</a><a className="text-decoration-none text-dark" href={`/user/${currentUser}`}><div>{currentUser}</div></a><div className="logout"><a href='/' onClick={authCtx.logout}>Log out</a></div></>)}
 
                 </div>
             </nav>

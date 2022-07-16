@@ -1,0 +1,30 @@
+.item__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 8%;
+}
+
+.item__description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+}
+
+.item__container img {
+    width: 550px;
+    height: 550px;
+    margin: 4rem;
+    object-fit: cover;
+
+}
+
+.buy__button {}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.7rem;
+}

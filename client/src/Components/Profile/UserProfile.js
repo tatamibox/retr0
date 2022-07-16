@@ -21,7 +21,6 @@ const UserProfile = () => {
             })
     }, [])
 
-    console.log(userProducts)
     const renderUserProductImages = () => {
 
     }
@@ -33,13 +32,17 @@ const UserProfile = () => {
             <div className={styles.image__container}>
                 {userProducts.map((product, i) => (
                     <div className="d-flex flex-column justify-content-center text-center align-items-center">
-                        <img src={product} key={i}></img>
-                        <div>Desc</div>
+                        <a href={`/product/${product.id}`}><img src={product.imageURL} key={i}></img></a>
+                        <h2 className={styles.product__title}>{product.name}</h2>
+                        <p className={styles.product__price}>{product.price}</p>
                     </div>
                 ))}
 
             </div>
+
+
         </>
+
     )
 
 }

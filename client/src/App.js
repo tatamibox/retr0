@@ -4,6 +4,7 @@ import Home from './Components/Home';
 import UserProfile from './Components/Profile/UserProfile'
 import Navbar from './Components/Navbar/Navbar';
 import LogIn from './Components/Routes/LogIn/LogIn';
+import Product from './Components/Routes/Product/Product';
 import SignUp from './Components/Routes/SignUp/SignUp';
 
 import Post from './Components/Post/Post';
@@ -23,7 +24,7 @@ function App() {
           <Route exact path='/signup' element={<SignUp />} />
           <Route exact path='/login' element={<LogIn />} />
           <Route exact path='/post' element={<Post />} />
-
+          <Route exact path='/product/:id' element={<Product />} />
         </Routes>
       </Router>
     </>
