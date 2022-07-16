@@ -1,4 +1,49 @@
 .header {
-    font-size: 7rem;
+    font-size: 3rem;
     margin-top: 3%;
+    width: 23rem;
+    height: 114px;
+    margin-bottom: 7rem;
+}
+
+.hero__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10rem;
+    align-items: center;
+    margin-top: 5%;
+}
+
+.carousel__image {
+    height: 500px;
+    object-fit: cover;
+}
+
+.carousel {
+    height: 500px;
+    width: 800px;
+}
+
+.hero__left {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero__left p {
+    margin-top: -5rem;
+    font-size: 1.5rem;
+    width: 75%;
+}
+
+.shop__button {
+    transition: background-color 200ms ease-in-out;
+}
+
+.shop__button:hover {
+    background-color: rgb(104, 96, 96);
+
 }

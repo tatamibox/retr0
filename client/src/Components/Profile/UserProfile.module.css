@@ -1,9 +1,10 @@
 .image__container {
     display: flex;
-    margin: 5rem;
+    margin: 2rem;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+
 
 }
 

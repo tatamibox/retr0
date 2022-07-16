@@ -29,12 +29,15 @@ const UserProfile = () => {
 
     return (
         <>
-            <h1 className={styles.usernameHeader}>{username}</h1>
+            <h1 className='text-center my-5'>{username}</h1>
             <div className={styles.image__container}>
                 {userProducts.map((product, i) => (
-
-                    <img src={product} key={i}></img>
+                    <div className="d-flex flex-column justify-content-center text-center align-items-center">
+                        <img src={product} key={i}></img>
+                        <div>Desc</div>
+                    </div>
                 ))}
+
             </div>
         </>
     )
