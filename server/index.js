@@ -83,3 +83,24 @@ app.post('/getProduct', catchAsync(async (req, res) => {
     const product = await Product.findById(id);
     res.json(product)
 }))
+
+app.post('/postComment', catchAsync(async (req, res) => {
+    const { username, comment, time, productId } = req.body;
+    console.log(productId)
+    const newComment = new Comment({ username: username, comment: comment, time: time, productId: productId })
+    await newComment.save();
+    const currentProduct = await Product.findById(productId);
+    currentProduct.comments.push(newComment);
+    await currentProduct.save();
+
+}))
+
+app.post('/getComment', catchAsync(async (req, res) => {
+    const { comments } = req.body;
+    const commentsArray = [];
+    for (let comment of comments) {
+        let thisComment = await Comment.findById(comment)
+        commentsArray.push(thisComment)
+    }
+    res.json(commentsArray)
+}))

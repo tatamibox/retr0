@@ -34,7 +34,7 @@ const UserProfile = () => {
                     <div className="d-flex flex-column justify-content-center text-center align-items-center">
                         <a href={`/product/${product.id}`}><img src={product.imageURL} key={i}></img></a>
                         <h2 className={styles.product__title}>{product.name}</h2>
-                        <p className={styles.product__price}>{product.price}</p>
+                        <p className={styles.product__price}>${product.price}</p>
                     </div>
                 ))}
 

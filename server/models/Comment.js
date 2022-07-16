@@ -4,7 +4,9 @@ const Schema = mongoose.Schema;
 
 const commentSchema = new Schema({
     username: String,
-    content: String
+    comment: String,
+    time: String,
+    productId: String
 })
 
 const Comment = mongoose.model('Comment', commentSchema)

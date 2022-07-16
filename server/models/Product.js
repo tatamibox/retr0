@@ -7,7 +7,7 @@ const productSchema = new Schema({
     price: String,
     imageURL: String,
     name: String,
-    products: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]
 })
 
 const Product = mongoose.model('Product', productSchema)
