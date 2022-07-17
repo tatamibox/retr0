@@ -92,7 +92,7 @@ app.post('/postComment', catchAsync(async (req, res) => {
     const currentProduct = await Product.findById(productId);
     currentProduct.comments.push(newComment);
     await currentProduct.save();
-
+    res.json({ message: 'Post success' })
 }))
 
 app.post('/getComment', catchAsync(async (req, res) => {

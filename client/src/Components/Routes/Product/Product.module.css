@@ -13,7 +13,12 @@
 
 }
 
-.item__container img {
+.like__button {
+    height: 10px;
+    width: 10px;
+}
+
+.item__container .productImage {
     width: 550px;
     height: 550px;
     margin: 4rem;
@@ -21,7 +26,6 @@
 
 }
 
-.buy__button {}
 
 .buttons {
     display: flex;
@@ -51,4 +55,10 @@
 .comment__form button {
     width: 80px;
     height: 40px;
+}
+
+.like__button {
+    height: 2rem;
+    width: 2rem;
+    cursor: pointer;
 }

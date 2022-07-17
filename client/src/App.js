@@ -6,9 +6,11 @@ import Navbar from './Components/Navbar/Navbar';
 import LogIn from './Components/Routes/LogIn/LogIn';
 import Product from './Components/Routes/Product/Product';
 import SignUp from './Components/Routes/SignUp/SignUp';
-
 import Post from './Components/Post/Post';
 import './App.css';
+
+
+
 
 function App() {
 

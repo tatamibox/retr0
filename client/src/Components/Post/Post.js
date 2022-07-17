@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useRef, useState, useContext } from 'react';
+import useHttp from '../../hooks/use-http';
 import styles from './Post.module.css'
 import { storage } from '../../firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';

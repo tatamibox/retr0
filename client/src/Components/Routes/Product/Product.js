@@ -3,20 +3,38 @@ import { useEffect, useState, useContext, useRef } from "react";
 import styles from './Product.module.css'
 import AuthContext from "../../store/auth-context";
 import axios from "axios";
+import heart_empty from '../../../assets/heart_empty.png'
+import heart_filled from '../../../assets/heart_filled.png'
 const Product = () => {
 
+
+    const [commentAmount, setCommentAmount] = useState(5)
+    const [likeStatus, setLikeStatus] = useState(false)
+    const [newComment, setNewComment] = useState(0)
+    const { id } = useParams();
+    useEffect(() => {
+        axios.post('http://localhost:3001/getProduct', { id: id })
+            .then((res) => {
+                setCurrentProduct(res.data)
+            })
+    }, [])
     useEffect(() => {
         axios.post('/getProduct', { id: id })
             .then((res) => {
-                axios.post('/getComment', { comments: res.data.comments })
+                const commentsArray = res.data.comments.reverse().splice(0, (commentAmount))
+
+                axios.post('/getComment', { comments: commentsArray })
                     .then((res) => {
+                        console.log(res)
+
                         setProductComments(res.data)
+
                     })
 
 
             })
 
-    }, [])
+    }, [newComment])
     const [productComments, setProductComments] = useState([]);
     const commentRef = useRef();
 
@@ -34,27 +52,33 @@ const Product = () => {
                 axios.post('/userinfo', { localId: res.data.users[0].localId })
                     .then((res) => {
                         axios.post('/postComment', { time: time, username: res.data.username, comment: comment, productId: id })
+                            .then((res) => {
+                                setNewComment(newComment + 1)
+
+                            })
+
                     })
             })
     }
 
 
-
+    const alterCommentList = (event) => {
+        event.preventDefault();
+        setCommentAmount(commentAmount + 5)
+        setNewComment(newComment + 1)
+    }
     const authCtx = useContext(AuthContext)
 
     const [currentProduct, setCurrentProduct] = useState('')
 
-    const { id } = useParams();
-    useEffect(() => {
-        axios.post('http://localhost:3001/getProduct', { id: id })
-            .then((res) => {
-                setCurrentProduct(res.data)
-            })
-    }, [])
-    console.log(productComments)
+
+
+
     return <>
         <div className={styles.item__container}>
-            <img src={currentProduct.imageURL}></img>
+            <img src={currentProduct.imageURL} className={styles.productImage}></img>
+            {!likeStatus && (<img src={heart_empty} className={styles.like__button} onClick={() => setLikeStatus(!likeStatus)} alt="heart"></img>)}
+            {likeStatus && (<img src={heart_filled} className={styles.like__button} onClick={() => setLikeStatus(!likeStatus)} alt="heart"></img>)}
             <div className={styles.item__description}>
                 <h1>{currentProduct.name}</h1>
                 <p>${currentProduct.price}</p>
@@ -79,6 +103,7 @@ const Product = () => {
                     <p className={styles.product__price}>{comment.time}</p>
                 </div>
             ))}
+            <button className={styles.loadMore} onClick={alterCommentList}>Load More</button>
         </div>
     </>
 }
