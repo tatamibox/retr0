@@ -2,10 +2,12 @@ import { useState, Fragment } from 'react'
 import styles from './Navbar.module.css'
 import { useContext, useEffect } from 'react'
 import AuthContext from '../store/auth-context'
+import verified from '../../assets/verified.png'
 import axios from 'axios'
 const Navbar = () => {
 
     const [currentUser, setCurrentUser] = useState();
+    const [verifiedUser, setVerifiedUser] = useState(false)
 
     const authCtx = useContext(AuthContext);
     const isLoggedIn = authCtx.isLoggedIn;
@@ -18,14 +20,13 @@ const Navbar = () => {
                 const localId = (res.data.users[0].localId)
                 axios.post('http://localhost:3001/userInfo', { localId: localId })
                     .then((res) => {
+                        setVerifiedUser(res.data.verified)
                         setCurrentUser(res.data.username)
                     })
             })
 
 
     }
-
-
 
 
     return (
@@ -44,7 +45,7 @@ const Navbar = () => {
 
                     )}
 
-                    {authCtx.isLoggedIn && (<><a href="/post" className="btn btn-outline-dark">Post</a><a className="text-decoration-none text-dark" href={`/user/${currentUser}`}><div>{currentUser}</div></a><div className="logout"><a href='/' onClick={authCtx.logout}>Log out</a></div></>)}
+                    {authCtx.isLoggedIn && (<><a href="/post" className="btn btn-outline-dark">Post</a><a className="text-decoration-none text-dark" href={`/user/${currentUser}`}><div>{currentUser}{verifiedUser && (<img src={verified} className={`${styles.verifiedIcon}`}></img>)}</div></a><div className="logout"><a href='/' onClick={authCtx.logout}>Log out</a></div></>)}
 
                 </div>
             </nav>

@@ -6,7 +6,8 @@ const commentSchema = new Schema({
     username: String,
     comment: String,
     time: String,
-    productId: String
+    productId: String,
+    verified: Boolean
 })
 
 const Comment = mongoose.model('Comment', commentSchema)

@@ -1,9 +1,22 @@
 import styles from './Home.module.css'
 import Navbar from './Navbar/Navbar'
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Typewriter from 'typewriter-effect';
 import AuthContext from './store/auth-context';
+import axios from 'axios';
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // 
+// ..
+
 const Home = () => {
+    AOS.init();
+
+    const [productCounter, setProductCounter] = useState(16)
+    const [latestProducts, setLatestProducts] = useState([])
+    useEffect(() => {
+        axios.post('/latestProducts', { productCounter: productCounter })
+            .then(res => setLatestProducts(res.data))
+    }, [])
 
     const authCtx = useContext(AuthContext);
 
@@ -47,6 +60,16 @@ const Home = () => {
                     </button>
                 </div>
             </div>
+            <section className={styles.latestPosts} >
+                <h2 className={styles.latestHeader}>Latest Posts</h2>
+                <div className={styles.posts__section}>
+                    {latestProducts.map((product, i) => (
+                        (i < 4 && <a className={styles.image__links} key={i} href={`/product/${product._id}`}><img className={styles.productImage} src={product.imageURL} alt="product preview"></img></a>) ||
+                        (i >= 4 && <a className={styles.image__links} key={i} href={`/product/${product._id}`}><img className={styles.productImage} data-aos='fade' src={product.imageURL} alt="product preview"></img></a>)
+
+                    ))}
+                </div>
+            </section>
         </>
     )
 }

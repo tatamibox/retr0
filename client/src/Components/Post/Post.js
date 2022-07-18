@@ -16,11 +16,17 @@ const Post = () => {
     const productRef = useRef();
     const priceRef = useRef();
     const imageRef = useRef();
+    const categoryRef = useRef();
+    const sizeRef = useRef();
+    const tagsRef = useRef();
 
     const submitHandler = (e) => {
 
         e.preventDefault();
 
+        const tags = tagsRef.current.value;
+        const size = sizeRef.current.value;
+        const category = categoryRef.current.value;
         const product = productRef.current.value;
         const price = priceRef.current.value;
         const image = imageRef.current.files[0];
@@ -46,7 +52,10 @@ const Post = () => {
                                         username: res.data.username,
                                         product: product,
                                         imageURL: downloadURL,
-                                        price: price
+                                        price: price,
+                                        category: category,
+                                        size: size,
+                                        tags: tags
                                     })
                                 })
                         })
@@ -68,6 +77,28 @@ const Post = () => {
             <input type="number" ref={priceRef}></input>
             <label for="image">Upload File Image</label>
             <input type="file" id="image" ref={imageRef}></input>
+            <label for="tags">Tags(separated by a space)</label>
+            <input type="text" id="tags" ref={tagsRef}></input>
+            <label for="size">Category</label>
+            <select id="category" ref={categoryRef}>
+                <option value="outerwear">Outerwear</option>
+                <option value="accessories">Accessories</option>
+                <option value="pants">Pants</option>
+                <option value="shoes">Shoes</option>
+                <option value="shirts">Shirts</option>
+                <option value="other">Other</option>
+            </select>
+            <label for="size">Size</label>
+            <select id="size" ref={sizeRef}>
+                <option value="xxs">XXS</option>
+                <option value="xs">XS</option>
+                <option value="s">S</option>
+                <option value="m">M</option>
+                <option value="l">L</option>
+                <option value="xl">XL</option>
+                <option value="xxl">XXL</option>
+                <option value="os">OS</option>
+            </select>
             <button type="submit" onClick={submitHandler}>Submit</button>
         </form>
     )

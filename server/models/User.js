@@ -11,7 +11,11 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    products: [{ type: Schema.Types.ObjectId, ref: 'Product' }]
+    products: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
+    verified: {
+        type: Boolean,
+        default: false
+    }
 
 })
 

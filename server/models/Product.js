@@ -7,7 +7,13 @@ const productSchema = new Schema({
     price: String,
     imageURL: String,
     name: String,
-    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+    size: String,
+    category: {
+        type: String,
+        enum: ['pants', 'accessories', 'outerwear', 'shoes', 'shirts', 'other']
+    },
+    tags: Array
 })
 
 const Product = mongoose.model('Product', productSchema)

@@ -3,6 +3,7 @@ import { useEffect, useState, useContext, useRef } from "react";
 import styles from './Product.module.css'
 import AuthContext from "../../store/auth-context";
 import axios from "axios";
+import verified from '../../../assets/verified.png'
 import heart_empty from '../../../assets/heart_empty.png'
 import heart_filled from '../../../assets/heart_filled.png'
 const Product = () => {
@@ -25,7 +26,7 @@ const Product = () => {
 
                 axios.post('/getComment', { comments: commentsArray })
                     .then((res) => {
-                        console.log(res)
+
 
                         setProductComments(res.data)
 
@@ -51,7 +52,7 @@ const Product = () => {
             .then((res) => {
                 axios.post('/userinfo', { localId: res.data.users[0].localId })
                     .then((res) => {
-                        axios.post('/postComment', { time: time, username: res.data.username, comment: comment, productId: id })
+                        axios.post('/postComment', { time: time, username: res.data.username, comment: comment, productId: id, verified: res.data.verified })
                             .then((res) => {
                                 setNewComment(newComment + 1)
 
@@ -71,7 +72,7 @@ const Product = () => {
 
     const [currentProduct, setCurrentProduct] = useState('')
 
-
+    console.log(productComments)
 
 
     return <>
@@ -86,7 +87,7 @@ const Product = () => {
             </div>
         </div>
 
-        <div className="comments__container">
+        <div className={styles.comments__container}>
             <h2 className="text-center">Comments</h2>
 
 
@@ -96,15 +97,18 @@ const Product = () => {
                     <button type='submit' className="btn btn-outline-dark" onClick={submitCommentHandler}>Post</button>
                 </form>
             )}
-            {productComments.map((comment, i) => (
-                <div className="d-flex flex-column justify-content-center text-center align-items-center" key={i}>
-                    <h2 className={styles.product__title}>{comment.username}</h2>
-                    <p className={styles.product__price}>{comment.comment}</p>
-                    <p className={styles.product__price}>{comment.time}</p>
-                </div>
-            ))}
-            <button className={styles.loadMore} onClick={alterCommentList}>Load More</button>
+            <div className={styles.comments}>
+                {productComments.map((comment, i) => (
+                    <div className={styles.comment__individual} key={i}>
+                        <a className='text-decoration-none text-dark' href={`/user/${comment.username}`}><div className={styles.username__container}><h2 className={styles.comment__user}>@{comment.username}</h2>{comment.verified && (<img src={verified} className={styles.verifiedIcon}></img>)}</div></a>
+                        <p className={styles.comment__comment}>{comment.comment}</p>
+                        <p className={styles.comment__time}>{comment.time}</p>
+                    </div>
+                ))}
+            </div>
+            <button className={`${styles.loadMore} btn btn-outline-dark`} onClick={alterCommentList}>Load More</button>
         </div>
+
     </>
 }
 

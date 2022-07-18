@@ -45,15 +45,15 @@ app.post('/signUp', catchAsync(async (req, res) => {
 app.post('/userInfo', catchAsync(async (req, res) => {
     const { localId } = req.body;
     const currentUser = await User.findOne({ localId: localId })
-    res.json({ username: currentUser.username })
+    res.json({ username: currentUser.username, verified: currentUser.verified })
 }))
 
 app.post('/uploadProduct', catchAsync(async (req, res) => {
-    const { username, product, imageURL, price } = req.body;
-    const newProduct = new Product({ username: username, name: product, imageURL: imageURL, price: price });
+    const { username, product, imageURL, price, tags, size, category } = req.body;
+    const tagsArray = tags.split(' ')
+    const newProduct = new Product({ username: username, name: product, imageURL: imageURL, price: price, tags: tagsArray, size: size, category: category });
     await newProduct.save();
     const currentUser = await User.findOne({ username: username })
-
     currentUser.products.push(newProduct);
     currentUser.save();
 
@@ -68,11 +68,12 @@ app.post('/findByUser', catchAsync(async (req, res) => {
 app.post('/getUserProducts', catchAsync(async (req, res) => {
     const { totalProducts } = req.body;
     let productArray = []
+    console.log(productArray)
     for (let product of totalProducts) {
         const thisProduct = await Product.findById(product)
-        console.log(thisProduct)
-        const p = { imageURL: thisProduct.imageURL, price: thisProduct.price, name: thisProduct.name, id: thisProduct._id }
+        const p = { imageURL: thisProduct.imageURL, price: thisProduct.price, name: thisProduct.name, id: thisProduct._id, tags: thisProduct.tags, category: thisProduct.category, size: thisProduct.size }
         productArray.push(p)
+
     }
     res.json(productArray)
 }))
@@ -85,9 +86,9 @@ app.post('/getProduct', catchAsync(async (req, res) => {
 }))
 
 app.post('/postComment', catchAsync(async (req, res) => {
-    const { username, comment, time, productId } = req.body;
+    const { username, comment, time, productId, verified } = req.body;
     console.log(productId)
-    const newComment = new Comment({ username: username, comment: comment, time: time, productId: productId })
+    const newComment = new Comment({ username: username, comment: comment, time: time, productId: productId, verified: verified })
     await newComment.save();
     const currentProduct = await Product.findById(productId);
     currentProduct.comments.push(newComment);
@@ -104,3 +105,12 @@ app.post('/getComment', catchAsync(async (req, res) => {
     }
     res.json(commentsArray)
 }))
+
+app.post('/latestProducts', async (req, res) => {
+    const { productCounter = 20 } = req.body;
+    console.log(productCounter)
+    const products = await Product.find({})
+    const splicedProducts = products.reverse().splice(0, productCounter)
+    console.log(splicedProducts)
+    res.json(splicedProducts)
+})
