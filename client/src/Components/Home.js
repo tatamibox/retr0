@@ -35,7 +35,7 @@ const Home = () => {
                         }}></Typewriter>
                     </h1>
                     <p>the only community-driven vintage fashion marketplace you'll need.</p>
-                    <button className={`btn btn-dark btn-lg ${styles.shop__button}`}>Shop Now</button>
+                    <a href='/shop' className={`btn btn-dark btn-lg ${styles.shop__button}`}>Shop Now</a>
                 </div>
 
                 <div id="carouselExampleControls" class={`carousel slide ${styles.carousel} `} data-bs-ride="carousel">

@@ -20,8 +20,9 @@ function App() {
 
   return (
     <>
-      <Navbar />
+
       <Router>
+        <Navbar />
         <Routes>
           <Route exact path='/' element={<Home />} />
           <Route path="/user/:username" element={<UserProfile />} />

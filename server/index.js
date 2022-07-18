@@ -114,3 +114,14 @@ app.post('/latestProducts', async (req, res) => {
     console.log(splicedProducts)
     res.json(splicedProducts)
 })
+
+app.post('/filterProducts', catchAsync(async (req, res) => {
+    const { query } = req.body;
+    console.log(req.query)
+    const nameRegex = new RegExp(query);
+    const filtered = await Product.find({ $or: [{ name: { $regex: nameRegex, $options: 'i' } }, { tags: { $regex: nameRegex, $options: 'i' } }] })
+    res.json(filtered)
+
+
+
+}))

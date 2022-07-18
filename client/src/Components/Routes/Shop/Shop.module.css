@@ -24,10 +24,16 @@
     object-fit: cover;
 }
 
-.seller__username {
+.product__name {
     font-weight: bold;
-    letter-spacing: 0.04rem;
     font-size: 1.2rem;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+}
+
+.product__price {
+    margin-bottom: 0.5rem;
 }
 
 .tag {

@@ -1,10 +1,16 @@
-import { useState, Fragment } from 'react'
+import { useState, Fragment, useRef } from 'react'
 import styles from './Navbar.module.css'
 import { useContext, useEffect } from 'react'
 import AuthContext from '../store/auth-context'
+import { useNavigate } from 'react-router-dom'
 import verified from '../../assets/verified.png'
 import axios from 'axios'
 const Navbar = () => {
+    const submitHandler = () => {
+        navigate(`/shop/${searchRef.current.value}`)
+    }
+    const navigate = useNavigate()
+    const searchRef = useRef()
 
     const [currentUser, setCurrentUser] = useState();
     const [verifiedUser, setVerifiedUser] = useState(false)
@@ -33,7 +39,10 @@ const Navbar = () => {
         <Fragment>
             <nav className={styles.navbar__container}>
                 <div className={`${styles.logo}`}><a className={styles.logo} href="/">retr0</a></div>
-                <input type='text' className={`${styles.search__bar}`} placeholder='Search'></input>
+                <form>
+                    <input ref={searchRef} type='text' className={`${styles.search__bar}`} placeholder='Search'></input>
+                    <button type="submit" onClick={submitHandler}>Search</button>
+                </form>
                 <div className={styles.navbar__links}>
                     {!authCtx.isLoggedIn && (
                         <>

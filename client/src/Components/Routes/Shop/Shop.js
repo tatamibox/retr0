@@ -45,7 +45,8 @@ const Shop = () => {
                     <>
                         <div className={styles.product__container} key={i}>
                             <img src={product.imageURL} alt="item preview"></img>
-                            <div className={styles.seller__username}>{product.username}</div>
+                            <div className={styles.product__name}>{product.name}</div>
+                            <div className={styles.product__price}>${product.price}</div>
                             <div className={`${styles.tags__container} d-flex flex-row gap-2`}>
                                 {product.tags.map((tag, i) => (
                                     <div key={i} className={`card ${styles.tag}`}>{tag}</div>
