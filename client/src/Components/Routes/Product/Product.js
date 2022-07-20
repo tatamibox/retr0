@@ -7,6 +7,23 @@ import verified from '../../../assets/verified.png'
 import heart_empty from '../../../assets/heart_empty.png'
 import heart_filled from '../../../assets/heart_filled.png'
 const Product = () => {
+    const authCtx = useContext(AuthContext)
+    const atcHandler = () => {
+        if (authCtx.isLoggedIn) {
+            axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${process.env.REACT_APP_FIREBASE_AUTH}`, {
+                idToken: authCtx.token
+            })
+                .then((res) => {
+                    axios.post('/userinfo', { localId: res.data.users[0].localId })
+                        .then((res) => {
+                            axios.post('/addToCart', {
+                                id: id,
+                                username: res.data.username
+                            })
+                        })
+                })
+        }
+    }
 
 
     const [commentAmount, setCommentAmount] = useState(5)
@@ -26,13 +43,8 @@ const Product = () => {
 
                 axios.post('/getComment', { comments: commentsArray })
                     .then((res) => {
-
-
                         setProductComments(res.data)
-
                     })
-
-
             })
 
     }, [newComment])
@@ -68,11 +80,10 @@ const Product = () => {
         setCommentAmount(commentAmount + 5)
         setNewComment(newComment + 1)
     }
-    const authCtx = useContext(AuthContext)
+
 
     const [currentProduct, setCurrentProduct] = useState('')
 
-    console.log(productComments)
 
 
     return <>
@@ -83,7 +94,7 @@ const Product = () => {
             <div className={styles.item__description}>
                 <h1>{currentProduct.name}</h1>
                 <p>${currentProduct.price}</p>
-                <div className={styles.buttons}><button className={`${styles.buy__button} btn btn-dark`}>Buy Now</button><button className='btn btn-outline-dark'>Offer</button></div>
+                <div className={styles.buttons}><button className={`${styles.buy__button} btn btn-dark`}>Buy Now</button><button className='btn btn-outline-dark' onClick={atcHandler}>Add to Cart</button></div>
             </div>
         </div>
 

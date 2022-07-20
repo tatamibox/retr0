@@ -5,6 +5,7 @@ const axios = require('axios');
 const User = require('./models/User')
 const Product = require('./models/Product')
 const Comment = require('./models/Comment')
+const Cart = require('./models/Cart')
 
 const dotenv = require('dotenv');
 require('dotenv').config();
@@ -45,7 +46,7 @@ app.post('/signUp', catchAsync(async (req, res) => {
 app.post('/userInfo', catchAsync(async (req, res) => {
     const { localId } = req.body;
     const currentUser = await User.findOne({ localId: localId })
-    res.json({ username: currentUser.username, verified: currentUser.verified })
+    res.json({ username: currentUser.username, verified: currentUser.verified, cart: currentUser.cart })
 }))
 
 app.post('/uploadProduct', catchAsync(async (req, res) => {
@@ -68,7 +69,7 @@ app.post('/findByUser', catchAsync(async (req, res) => {
 app.post('/getUserProducts', catchAsync(async (req, res) => {
     const { totalProducts } = req.body;
     let productArray = []
-    console.log(productArray)
+
     for (let product of totalProducts) {
         const thisProduct = await Product.findById(product)
         const p = { imageURL: thisProduct.imageURL, price: thisProduct.price, name: thisProduct.name, id: thisProduct._id, tags: thisProduct.tags, category: thisProduct.category, size: thisProduct.size }
@@ -80,14 +81,12 @@ app.post('/getUserProducts', catchAsync(async (req, res) => {
 
 app.post('/getProduct', catchAsync(async (req, res) => {
     const { id } = req.body;
-    console.log(id)
     const product = await Product.findById(id);
     res.json(product)
 }))
 
 app.post('/postComment', catchAsync(async (req, res) => {
     const { username, comment, time, productId, verified } = req.body;
-    console.log(productId)
     const newComment = new Comment({ username: username, comment: comment, time: time, productId: productId, verified: verified })
     await newComment.save();
     const currentProduct = await Product.findById(productId);
@@ -108,20 +107,34 @@ app.post('/getComment', catchAsync(async (req, res) => {
 
 app.post('/latestProducts', async (req, res) => {
     const { productCounter = 20 } = req.body;
-    console.log(productCounter)
     const products = await Product.find({})
     const splicedProducts = products.reverse().splice(0, productCounter)
-    console.log(splicedProducts)
     res.json(splicedProducts)
 })
 
 app.post('/filterProducts', catchAsync(async (req, res) => {
     const { query } = req.body;
-    console.log(req.query)
     const nameRegex = new RegExp(query);
     const filtered = await Product.find({ $or: [{ name: { $regex: nameRegex, $options: 'i' } }, { tags: { $regex: nameRegex, $options: 'i' } }] })
     res.json(filtered)
 
+}))
+
+app.post('/addToCart', catchAsync(async (req, res) => {
+    const { id, username } = req.body;
+    const user = await User.findOne({ username: username });
+    const product = await Product.findById(id);
+    if (!user.cart) {
+        const cart = new Cart({ products: product, quantity: 1 })
+        await cart.save();
+        user.cart = cart;
+        await user.save();
+    } else {
+        const cart = await Cart.findById(user.cart)
+        cart.products.push(id);
+        cart.quantity = cart.products.length
+        await cart.save();
+    }
 
 
 }))

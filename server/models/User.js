@@ -15,7 +15,8 @@ const userSchema = new Schema({
     verified: {
         type: Boolean,
         default: false
-    }
+    },
+    cart: { type: Schema.Types.ObjectId, ref: 'Cart' }
 
 })
 

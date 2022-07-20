@@ -2,6 +2,8 @@ import { useState, Fragment, useRef } from 'react'
 import styles from './Navbar.module.css'
 import { useContext, useEffect } from 'react'
 import AuthContext from '../store/auth-context'
+import shoppingcart from '../../assets/shoppingcart.png'
+import filledcart from '../../assets/filledcart.png'
 import { useNavigate } from 'react-router-dom'
 import verified from '../../assets/verified.png'
 import axios from 'axios'
@@ -14,6 +16,7 @@ const Navbar = () => {
 
     const [currentUser, setCurrentUser] = useState();
     const [verifiedUser, setVerifiedUser] = useState(false)
+    const [cartStatus, setCartStatus] = useState(false)
 
     const authCtx = useContext(AuthContext);
     const isLoggedIn = authCtx.isLoggedIn;
@@ -28,6 +31,9 @@ const Navbar = () => {
                     .then((res) => {
                         setVerifiedUser(res.data.verified)
                         setCurrentUser(res.data.username)
+                        if (res.data.cart) {
+                            setCartStatus(true)
+                        }
                     })
             })
 
@@ -54,7 +60,7 @@ const Navbar = () => {
 
                     )}
 
-                    {authCtx.isLoggedIn && (<><a href="/post" className="btn btn-outline-dark">Post</a><a className="text-decoration-none text-dark" href={`/user/${currentUser}`}><div>{currentUser}{verifiedUser && (<img src={verified} className={`${styles.verifiedIcon}`}></img>)}</div></a><div className="logout"><a href='/' onClick={authCtx.logout}>Log out</a></div></>)}
+                    {authCtx.isLoggedIn && (<><a href="/post" className="btn btn-outline-dark">Post</a>{cartStatus && <a href='/'><img src={filledcart}></img></a>}{!cartStatus && <a href='/'><img src={shoppingcart}></img></a>}<a className="text-decoration-none text-dark" href={`/user/${currentUser}`}><div>{currentUser}{verifiedUser && (<img src={verified} className={`${styles.verifiedIcon}`}></img>)}</div></a><div className="logout"><a href='/' onClick={authCtx.logout}>Log out</a></div></>)}
 
                 </div>
             </nav>
