@@ -60,7 +60,7 @@ const Navbar = () => {
 
                     )}
 
-                    {authCtx.isLoggedIn && (<><a href="/post" className="btn btn-outline-dark">Post</a>{cartStatus && <a href='/'><img src={filledcart}></img></a>}{!cartStatus && <a href='/'><img src={shoppingcart}></img></a>}<a className="text-decoration-none text-dark" href={`/user/${currentUser}`}><div>{currentUser}{verifiedUser && (<img src={verified} className={`${styles.verifiedIcon}`}></img>)}</div></a><div className="logout"><a href='/' onClick={authCtx.logout}>Log out</a></div></>)}
+                    {authCtx.isLoggedIn && (<><a href="/post" className="btn btn-outline-dark">Post</a>{cartStatus && <a href='/cart'><img src={filledcart}></img></a>}{!cartStatus && <a href='/cart'><img src={shoppingcart}></img></a>}<a className="text-decoration-none text-dark" href={`/user/${currentUser}`}><div>{currentUser}{verifiedUser && (<img src={verified} className={`${styles.verifiedIcon}`}></img>)}</div></a><div className="logout"><a href='/' onClick={authCtx.logout}>Log out</a></div></>)}
 
                 </div>
             </nav>

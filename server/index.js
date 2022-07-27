@@ -135,6 +135,31 @@ app.post('/addToCart', catchAsync(async (req, res) => {
         cart.quantity = cart.products.length
         await cart.save();
     }
+}))
 
+app.post('/getCartContents', catchAsync(async (req, res) => {
+    const { cartId } = req.body;
+    const thisCart = await Cart.findById(cartId)
+    res.json(thisCart)
+}))
 
+app.post('/getMultipleProducts', catchAsync(async (req, res) => {
+    const { cartProductIds } = req.body
+    let allProductData = [];
+
+    for (let productId of cartProductIds) {
+        const product = await Product.findById(productId)
+        allProductData.push(product)
+    }
+
+    res.json(allProductData)
+}))
+
+app.put('/removeCartItem', catchAsync(async (req, res) => {
+    const { cartId, index } = req.body;
+    const thisCart = await Cart.findById(cartId)
+    console.log(thisCart)
+    thisCart.products.splice(index, 1)
+    thisCart.quantity = thisCart.products.length
+    await thisCart.save();
 }))

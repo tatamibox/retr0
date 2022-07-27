@@ -1,0 +1,39 @@
+.cart__container {
+    margin: 4rem;
+    display: flex;
+    flex-direction: row;
+    gap: 10%;
+}
+
+.cartProducts__container {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.product__image {
+    width: 8rem;
+    height: 8rem;
+    object-fit: cover;
+}
+
+.product__card {
+    display: flex;
+    flex-direction: row;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 7px;
+    padding: 2rem 1rem;
+    gap: 2rem;
+    border-radius: 10px;
+}
+
+.product__description {
+    display: flex;
+    flex-direction: column;
+}
+
+.button__remove {
+    width: 6rem;
+    text-align: center;
+}
