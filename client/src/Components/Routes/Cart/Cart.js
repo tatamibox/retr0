@@ -10,24 +10,32 @@ function Cart() {
     const [cartProductIds, setCartProductIds] = useState()
     const [productsContent, setProductsContent] = useState()
     const [changes, setChanges] = useState(0)
-    if (authCtx.isLoggedIn) {
-        axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${process.env.REACT_APP_FIREBASE_AUTH}`, {
-            idToken: localStorage.getItem('token')
-        })
-            .then((res) => {
-                const localId = (res.data.users[0].localId)
-                axios.post('http://localhost:3001/userInfo', { localId: localId })
-                    .then((res) => {
-                        setCartId(res.data.cart)
-                    })
+    const [user, setUser] = useState()
+    const [emptyCart, setEmptyCart] = useState(false)
+    useEffect(() => {
+        if (authCtx.isLoggedIn) {
+            axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${process.env.REACT_APP_FIREBASE_AUTH}`, {
+                idToken: localStorage.getItem('token')
             })
-    }
+                .then((res) => {
+                    const localId = (res.data.users[0].localId)
+                    axios.post('http://localhost:3001/userInfo', { localId: localId })
+                        .then((res) => {
+                            setUser(res.data)
+                            if (!res.data.cart) { setEmptyCart(true) }
+                            setCartId(res.data.cart)
+                        })
+                })
+        }
+    }, [])
+
 
     useEffect(() => {
         if (cartId) {
             axios.post('/getCartContents', { cartId })
                 .then((res) => {
-                    setCartProductIds(res.data.products)
+                    console.log(res)
+                    if (res.data === null) { setEmptyCart(true); setCartProductIds(undefined) } else { setCartProductIds(res.data.products) }
                 })
         }
     }, [cartId, changes])
@@ -39,13 +47,14 @@ function Cart() {
                     setProductsContent(res.data)
                 })
         }
+        else { setProductsContent(undefined) }
     }, [cartProductIds])
-    console.log(productsContent)
 
     const removeHandler = (i) => {
         axios.put('/removeCartItem', {
             cartId: cartId,
-            index: i
+            index: i,
+            username: user.username
         })
         setChanges(changes + 1)
     }
@@ -54,6 +63,7 @@ function Cart() {
 
             <div className={styles.cartProducts__container}>
                 <h2>Your cart</h2>
+                {emptyCart && <h3>Your cart is empty.</h3>}
                 {productsContent && productsContent.map((product, i) => (
                     <div className={styles.product__card}>
                         <img src={product.imageURL} className={styles.product__image} alt='product preview'></img>

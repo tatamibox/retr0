@@ -156,10 +156,17 @@ app.post('/getMultipleProducts', catchAsync(async (req, res) => {
 }))
 
 app.put('/removeCartItem', catchAsync(async (req, res) => {
-    const { cartId, index } = req.body;
+    const { cartId, index, username } = req.body;
     const thisCart = await Cart.findById(cartId)
     console.log(thisCart)
     thisCart.products.splice(index, 1)
     thisCart.quantity = thisCart.products.length
     await thisCart.save();
+    if (thisCart.quantity === 0) {
+        thisCart.remove();
+        const user = await User.findOne({ username: username })
+        user.cart = undefined;
+        await user.save()
+
+    }
 }))
