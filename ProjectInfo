@@ -11,12 +11,15 @@ Profiles:
 - A user page that displays their current listed items, transaction reviews, likes, and comments
 
 Products:
-- Product pages that have item photos, posted dates, and tagged categories 
-- Stripe API
-- Product info will be directly managed on MongoDB
-- Comments on the product page which has upvotes and downvotes
+- Product pages that have item photos, posted dates, and tagged categories COMPLETE :)
+- Stripe API // in progress
+- Product info will be directly managed on MongoDB COMPLETE :)
+- Comments on the product page which has upvotes and downvotes --> 50%, need to add the ability to upvote and downvote
 - Ability for a user to post a product they are selling --> { CONSTRAINTS: If a user has less than 5 verified sales,
                                                                 which are verified by a moderator on the site, posts must be verified. After that they are allowed to post freely}
+^^^ --- this idea has been removed, just need to add a delete option for the users who own the post and those who moderate the site
+therefore any inappropriate posts would be able to be removed by moderation / those who have the correct permissions on their account
+                                                                
                                                     
 
 
