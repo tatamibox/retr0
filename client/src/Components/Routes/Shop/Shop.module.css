@@ -49,3 +49,7 @@
 .tag:hover {
     background-color: rgb(226, 226, 226);
 }
+
+.tag__links {
+    text-decoration: none;
+}

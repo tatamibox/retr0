@@ -6,13 +6,16 @@ import axios from "axios";
 import verified from '../../../assets/verified.png'
 import heart_empty from '../../../assets/heart_empty.png'
 import heart_filled from '../../../assets/heart_filled.png'
+import { ClipLoader } from 'react-spinners'
 const Product = () => {
     const authCtx = useContext(AuthContext)
 
     // added to cart message
     const [atcSuccess, setAtcSuccess] = useState(false)
     const [atcFailure, setAtcFailure] = useState(false)
+    const [loading, setLoading] = useState(false)
     const atcHandler = () => {
+        setLoading(true)
         if (authCtx.isLoggedIn) {
             axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${process.env.REACT_APP_FIREBASE_AUTH}`, {
                 idToken: authCtx.token
@@ -25,9 +28,11 @@ const Product = () => {
                                 username: res.data.username
                             })
                                 .then((res) => {
+                                    setLoading(false)
                                     if (res.data.message) { setAtcSuccess(true) }
                                 })
                                 .catch((err) => {
+                                    setLoading(false)
                                     setAtcFailure(true)
                                 })
                         })
@@ -104,8 +109,8 @@ const Product = () => {
             <div className={styles.item__description}>
                 <h1>{currentProduct.name}</h1>
                 <p>${currentProduct.price}</p>
-                <div className={`${styles.buttons} mb-3`}><button className={`${styles.buy__button} btn btn-dark`}>Buy Now</button><button className='btn btn-outline-dark' onClick={atcHandler}>Add to Cart</button></div>
-                {atcSuccess && <span className="text-success">Successfully added to cart.</span>}
+                <div className={`${styles.buttons} mb-3`}><button disabled className={`${styles.buy__button} btn btn-dark`}>Buy Now</button><button className='btn btn-outline-dark' onClick={atcHandler}>Add to Cart</button></div>
+                {atcSuccess && <span className="text-success">Successfully added to cart.</span>}{loading && <span><ClipLoader /></span>}
             </div>
         </div>
 
