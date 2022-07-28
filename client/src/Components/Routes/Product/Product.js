@@ -12,11 +12,11 @@ const Product = () => {
 
     // added to cart message
     const [atcSuccess, setAtcSuccess] = useState(false)
-    const [atcFailure, setAtcFailure] = useState(false)
+    const [atcFailure, setAtcFailure] = useState('')
     const [loading, setLoading] = useState(false)
     const atcHandler = () => {
-        setLoading(true)
         if (authCtx.isLoggedIn) {
+            setLoading(true)
             axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${process.env.REACT_APP_FIREBASE_AUTH}`, {
                 idToken: authCtx.token
             })
@@ -38,6 +38,7 @@ const Product = () => {
                         })
                 })
         }
+        else (setAtcFailure('Please login before adding to cart.'))
     }
 
 
@@ -111,6 +112,7 @@ const Product = () => {
                 <p>${currentProduct.price}</p>
                 <div className={`${styles.buttons} mb-3`}><button disabled className={`${styles.buy__button} btn btn-dark`}>Buy Now</button><button className='btn btn-outline-dark' onClick={atcHandler}>Add to Cart</button></div>
                 {atcSuccess && <span className="text-success">Successfully added to cart.</span>}{loading && <span><ClipLoader /></span>}
+                {atcFailure && <span className="text-danger">{atcFailure}</span>}
             </div>
         </div>
 
