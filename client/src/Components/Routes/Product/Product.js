@@ -8,6 +8,10 @@ import heart_empty from '../../../assets/heart_empty.png'
 import heart_filled from '../../../assets/heart_filled.png'
 const Product = () => {
     const authCtx = useContext(AuthContext)
+
+    // added to cart message
+    const [atcSuccess, setAtcSuccess] = useState(false)
+    const [atcFailure, setAtcFailure] = useState(false)
     const atcHandler = () => {
         if (authCtx.isLoggedIn) {
             axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${process.env.REACT_APP_FIREBASE_AUTH}`, {
@@ -20,6 +24,12 @@ const Product = () => {
                                 id: id,
                                 username: res.data.username
                             })
+                                .then((res) => {
+                                    if (res.data.message) { setAtcSuccess(true) }
+                                })
+                                .catch((err) => {
+                                    setAtcFailure(true)
+                                })
                         })
                 })
         }
@@ -94,7 +104,8 @@ const Product = () => {
             <div className={styles.item__description}>
                 <h1>{currentProduct.name}</h1>
                 <p>${currentProduct.price}</p>
-                <div className={styles.buttons}><button className={`${styles.buy__button} btn btn-dark`}>Buy Now</button><button className='btn btn-outline-dark' onClick={atcHandler}>Add to Cart</button></div>
+                <div className={`${styles.buttons} mb-3`}><button className={`${styles.buy__button} btn btn-dark`}>Buy Now</button><button className='btn btn-outline-dark' onClick={atcHandler}>Add to Cart</button></div>
+                {atcSuccess && <span className="text-success">Successfully added to cart.</span>}
             </div>
         </div>
 

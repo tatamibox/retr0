@@ -135,6 +135,7 @@ app.post('/addToCart', catchAsync(async (req, res) => {
         cart.quantity = cart.products.length
         await cart.save();
     }
+    res.json({ message: 'Successfully added to cart.' })
 }))
 
 app.post('/getCartContents', catchAsync(async (req, res) => {
@@ -158,15 +159,19 @@ app.post('/getMultipleProducts', catchAsync(async (req, res) => {
 app.put('/removeCartItem', catchAsync(async (req, res) => {
     const { cartId, index, username } = req.body;
     const thisCart = await Cart.findById(cartId)
-    console.log(thisCart)
-    thisCart.products.splice(index, 1)
-    thisCart.quantity = thisCart.products.length
-    await thisCart.save();
-    if (thisCart.quantity === 0) {
+    if (thisCart.products.length === 1) {
         thisCart.remove();
         const user = await User.findOne({ username: username })
         user.cart = undefined;
         await user.save()
-
+        res.status(200).json({ message: 'Successfully removed item.' })
     }
-}))
+    else {
+        thisCart.products.splice(index, 1)
+        thisCart.quantity = thisCart.products.length
+        await thisCart.save();
+        res.json(thisCart)
+        res.status(200).json({ message: 'Successfully removed item.' })
+    }
+}
+))

@@ -2,15 +2,22 @@ import React from 'react'
 import AuthContext from '../../store/auth-context'
 import { useContext, useState, useEffect } from 'react'
 import styles from './Cart.module.css'
+import { ClipLoader } from 'react-spinners'
 import getTotal from './get-total'
 import axios from 'axios'
 function Cart() {
     const authCtx = useContext(AuthContext)
+    // holds cart information
     const [cartId, setCartId] = useState()
     const [cartProductIds, setCartProductIds] = useState()
     const [productsContent, setProductsContent] = useState()
     const [changes, setChanges] = useState(0)
     const [user, setUser] = useState()
+
+    // loading spinner to prevent remove errors
+    const [loading, setLoading] = useState()
+
+    // responsible for empty cart screen which shows up on having no items
     const [emptyCart, setEmptyCart] = useState(false)
     useEffect(() => {
         if (authCtx.isLoggedIn) {
@@ -21,42 +28,59 @@ function Cart() {
                     const localId = (res.data.users[0].localId)
                     axios.post('http://localhost:3001/userInfo', { localId: localId })
                         .then((res) => {
+                            console.log(res.data)
                             setUser(res.data)
-                            if (!res.data.cart) { setEmptyCart(true) }
-                            setCartId(res.data.cart)
+                            if (!res.data.cart) { setEmptyCart(true); setCartId(undefined) }
+                            else { setCartId(res.data.cart) }
                         })
                 })
         }
-    }, [])
+    }, [changes])
 
+    // if there is a cart id, will set cart products state to the response
 
     useEffect(() => {
         if (cartId) {
+            setLoading(true)
             axios.post('/getCartContents', { cartId })
                 .then((res) => {
-                    console.log(res)
+                    console.log(res.data)
+                    setLoading(false)
                     if (res.data === null) { setEmptyCart(true); setCartProductIds(undefined) } else { setCartProductIds(res.data.products) }
                 })
         }
-    }, [cartId, changes])
+    }, [cartId])
 
+    // gets each product information from the list of product ids
     useEffect(() => {
+
         if (cartProductIds) {
+            setLoading(true)
             axios.post('/getMultipleProducts', { cartProductIds })
                 .then((res) => {
+                    console.log(res.data)
+                    setLoading(false)
                     setProductsContent(res.data)
                 })
         }
         else { setProductsContent(undefined) }
     }, [cartProductIds])
-
+    // removes items from the cart on the backend
     const removeHandler = (i) => {
+        setLoading(true)
         axios.put('/removeCartItem', {
             cartId: cartId,
             index: i,
             username: user.username
         })
-        setChanges(changes + 1)
+            .then((res) => {
+
+                if (!res.data.products) { setEmptyCart(true); setLoading(false); setCartProductIds(null) }
+                else { setCartProductIds(res.data.products); setLoading(false) }
+
+
+            })
+
     }
     return (
         <section className={styles.cart__container}>
@@ -64,6 +88,7 @@ function Cart() {
             <div className={styles.cartProducts__container}>
                 <h2>Your cart</h2>
                 {emptyCart && <h3>Your cart is empty.</h3>}
+                <div>{loading && <ClipLoader />}</div>
                 {productsContent && productsContent.map((product, i) => (
                     <div className={styles.product__card}>
                         <img src={product.imageURL} className={styles.product__image} alt='product preview'></img>
