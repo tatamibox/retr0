@@ -4,9 +4,8 @@ function CartTotal(props) {
 
     useEffect(() => {
         setTotalItems(props.products.length)
-    }, [])
+    }, [props.products])
     const [totalItems, setTotalItems] = useState()
-    console.log(totalItems)
     return (
         <>
             <section className={styles.total__container}>

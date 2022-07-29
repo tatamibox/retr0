@@ -18,11 +18,17 @@
 }
 
 .navbar__links {
-    display: flex;
     flex-direction: row;
     align-items: center;
     gap: 1rem;
     text-align: center;
+}
+
+@media only screen and (min-width: 767px) {
+    .navbar__links {
+        display: flex !important;
+
+    }
 }
 
 .search__bar {
@@ -34,4 +40,46 @@
 
 .verifiedIcon {
     width: 30px;
+}
+
+.search__form__mobile {
+    display: none;
+}
+
+.burger__open {
+    display: none;
+}
+
+@media only screen and (max-width: 767px) {
+    .navbar__container {}
+
+    .burger__open {
+        display: block;
+    }
+
+    .navbar__links {
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        align-items: center;
+        justify-content: center;
+        top: 0;
+        text-align: center;
+        width: 100%;
+        right: 0;
+        background-color: red;
+        padding: 2rem;
+        z-index: 10;
+    }
+
+    .search__form {
+        display: none;
+    }
+
+    .search__form__mobile {
+        display: block;
+
+        margin: auto;
+
+    }
 }

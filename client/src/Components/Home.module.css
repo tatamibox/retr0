@@ -60,18 +60,53 @@
     flex-wrap: wrap;
     justify-content: center;
     margin-bottom: 5%;
+    gap: 2rem;
 }
 
 .productImage {
-    width: 100%;
-    height: 400px;
-
+    width: 20rem;
+    height: 20rem;
     object-fit: cover;
 }
 
-.image__links {
-    width: 400px;
-    height: 400px;
-    margin-left: 5rem;
-    margin-bottom: 5rem;
+
+
+@media only screen and (max-width: 460px) {
+    .hero__container {
+        flex-direction: column;
+
+    }
+
+    .header {
+        font-size: 2.5rem;
+
+    }
+
+    .hero__left p {
+        font-size: 1.2rem;
+        margin-top: -5rem;
+    }
+
+    .carousel__image {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .carousel {
+        margin-top: -5rem;
+        height: 200px;
+        width: 80%;
+    }
+
+    .posts__section {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .productImage {
+        width: 20rem;
+        height: 20rem;
+        object-fit: cover;
+    }
 }

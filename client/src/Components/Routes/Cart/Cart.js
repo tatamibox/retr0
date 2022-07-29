@@ -83,6 +83,10 @@ function Cart() {
             })
 
     }
+    useEffect(() => {
+        if (productsContent) { authCtx.qtyHandler(productsContent.length) }
+    }, [productsContent])
+    console.log(authCtx.cartQuantity)
     return (
         <section className={styles.cart__container}>
 

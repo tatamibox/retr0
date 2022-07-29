@@ -4,14 +4,18 @@ const AuthContext = React.createContext({
     token: '',
     isLoggedIn: false,
     login: (token => { }),
-    logout: () => { }
+    logout: () => { },
+    cartQuantity: 0
 });
 
 export const AuthContextProvider = (props) => {
 
     const [token, setToken] = useState(localStorage.getItem('token'))
+    const [cartQuantity, setCartQuantity] = useState(0)
     const userIsLoggedIn = !!token;
-
+    const quantityHandler = (quantity) => {
+        setCartQuantity(quantity)
+    }
     const loginHandler = (token) => {
         setToken(token)
         localStorage.setItem('token', token)
@@ -24,7 +28,9 @@ export const AuthContextProvider = (props) => {
         token: token,
         isLoggedIn: userIsLoggedIn,
         login: loginHandler,
-        logout: logoutHandler
+        logout: logoutHandler,
+        qtyHandler: quantityHandler,
+        cartQuantity: cartQuantity
     };
 
     return <AuthContext.Provider value={contextValue}>
