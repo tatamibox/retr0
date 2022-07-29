@@ -4,6 +4,7 @@ import { useContext, useState, useEffect } from 'react'
 import styles from './Cart.module.css'
 import { ClipLoader } from 'react-spinners'
 import getTotal from './get-total'
+import CartTotal from './CartTotal'
 import axios from 'axios'
 function Cart() {
     const authCtx = useContext(AuthContext)
@@ -105,7 +106,7 @@ function Cart() {
             </div>
 
             <div className={styles.cartProducts__container}>
-                <h2>Total: {productsContent && getTotal(productsContent)}</h2>
+                <div>{productsContent && <CartTotal total={getTotal(productsContent)} emptyCart={emptyCart} products={productsContent} />}</div>
             </div>
         </section>
     )

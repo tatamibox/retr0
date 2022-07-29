@@ -38,7 +38,7 @@ const UserProfile = () => {
                         <p className={styles.product__price}>${product.price}</p>
                         <div className={`${styles.tags__container}`}>
                             {product.tags.map((tag, i) => (
-                                <div className={`card ${styles.tag}`}>{tag}</div>
+                                <div className={`card ${styles.tag}`}><a className={styles.product__link} href={`/shop/${tag}`}>{tag}</a></div>
                             ))}
                         </div>
                     </div>
