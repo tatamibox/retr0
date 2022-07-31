@@ -58,7 +58,7 @@ const Navbar = () => {
                 <div className={`${styles.logo}`}><a className={styles.logo} href="/">retr0</a></div><button onClick={burgerHandler} className={styles.burger__open}>x</button>
                 <form className={styles.search__form}>
                     <input ref={searchRef} type='text' className={`${styles.search__bar}`} placeholder='Search'></input>
-                    <button type="submit" onClick={submitHandler}>Search</button>
+                    <button className='btn btn-outline-dark' type="submit" onClick={submitHandler}>Search</button>
                 </form>
                 <div className={styles.navbar__links} style={{ display: `${style}` }} >
                     {!authCtx.isLoggedIn && (
@@ -70,11 +70,13 @@ const Navbar = () => {
                         </>
 
                     )}
-                    <button type='submit' onClick={burgerHandler} className={styles.burger__open}>x</button>
+                    <div>
+                        <button type='submit' onClick={burgerHandler} className={styles.burger__open}>x</button></div>
                     <form className={styles.search__form__mobile}>
 
+
                         <input ref={searchRef} type='text' className={`${styles.search__bar__mobile}`} placeholder='Search'></input>
-                        <button type="submit" onClick={submitHandler}>Search</button>
+                        <button className='btn btn-outline-dark' type="submit" onClick={submitHandler}>Search</button>
                     </form>
                     {authCtx.isLoggedIn && (<><a href="/post" className="btn btn-outline-dark">Post</a>{cartStatus && <a href='/cart'><img src={filledcart}></img></a>}{!cartStatus && <a href='/cart'><img src={shoppingcart}></img></a>}<a className="text-decoration-none text-dark" href={`/user/${currentUser}`}><div>{currentUser}{verifiedUser && (<img src={verified} className={`${styles.verifiedIcon}`}></img>)}</div></a><div className="logout"><a href='/' onClick={authCtx.logout}>Log out</a></div></>)}
 

@@ -28,7 +28,7 @@ const Shop = () => {
             setFilteredProducts(filtered)
         }
     }
-
+    console.log(filteredProducts)
     return (
         <>
             <h1 className='text-center'>Shop</h1>
@@ -44,7 +44,7 @@ const Shop = () => {
                 {filteredProducts.map((product, i) => (
                     <>
                         <div className={styles.product__container} key={i}>
-                            <img src={product.imageURL} alt="item preview"></img>
+                            <a href={`/product/${product._id}`}><img src={product.imageURL} alt="item preview"></img></a>
                             <div className={styles.product__name}>{product.name}</div>
                             <div className={styles.product__price}>${product.price}</div>
                             <div className={`${styles.tags__container} d-flex flex-row gap-2`}>

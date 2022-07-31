@@ -13,6 +13,7 @@
     gap: 10rem;
     align-items: center;
     margin-top: 5%;
+
 }
 
 .carousel__image {
@@ -109,4 +110,48 @@
         height: 20rem;
         object-fit: cover;
     }
+}
+
+@media only screen and (max-width: 767px) {
+    .hero__container {
+        flex-direction: column;
+
+    }
+
+    .carousel__image {
+        height: 400px;
+        object-fit: cover;
+    }
+
+    .carousel {
+        margin-top: 2rem;
+        height: 400px;
+        width: 80%;
+    }
+}
+
+
+@media only screen and (max-width: 1368px) {
+    .hero__container {
+        gap: 0rem;
+        width: 100%;
+        flex-direction: column;
+    }
+
+
+}
+
+@media only screen and (min-width: 768px) {
+    .carousel__image {
+        height: 500px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .carousel {
+        height: 500px;
+        width: 800px;
+        margin: 2rem;
+    }
+
 }

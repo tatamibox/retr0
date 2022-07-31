@@ -24,7 +24,7 @@
     text-align: center;
 }
 
-@media only screen and (min-width: 767px) {
+@media only screen and (min-width: 882px) {
     .navbar__links {
         display: flex !important;
 
@@ -34,7 +34,7 @@
 .search__bar {
     position: relative;
     padding: 0.5rem;
-    width: 500px;
+    width: 20rem;
     height: 40px;
 }
 
@@ -50,7 +50,7 @@
     display: none;
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 881px) {
     .navbar__container {}
 
     .burger__open {
