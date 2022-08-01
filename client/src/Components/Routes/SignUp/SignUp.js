@@ -25,7 +25,7 @@ const SignUp = () => {
         axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_AUTH}`,
             { email: email, password: password })
             .then((res) => {
-                axios.post('http://localhost:3001/signUp', { username: username, localId: res.data.localId })
+                axios.post('https://retrobackend.herokuapp.com/signUp', { username: username, localId: res.data.localId })
             })
         navigate('/login')
     }

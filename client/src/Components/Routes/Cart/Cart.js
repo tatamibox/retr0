@@ -27,7 +27,7 @@ function Cart() {
             })
                 .then((res) => {
                     const localId = (res.data.users[0].localId)
-                    axios.post('http://localhost:3001/userInfo', { localId: localId })
+                    axios.post('https://retrobackend.herokuapp.com/userInfo', { localId: localId })
                         .then((res) => {
                             console.log(res.data)
                             setUser(res.data)
@@ -43,7 +43,7 @@ function Cart() {
     useEffect(() => {
         if (cartId) {
             setLoading(true)
-            axios.post('/getCartContents', { cartId })
+            axios.post('https://retrobackend.herokuapp.com/getCartContents', { cartId })
                 .then((res) => {
                     console.log(res.data)
                     setLoading(false)
@@ -57,7 +57,7 @@ function Cart() {
 
         if (cartProductIds) {
             setLoading(true)
-            axios.post('/getMultipleProducts', { cartProductIds })
+            axios.post('https://retrobackend.herokuapp.com/getMultipleProducts', { cartProductIds })
                 .then((res) => {
                     console.log(res.data)
                     setLoading(false)
@@ -69,7 +69,7 @@ function Cart() {
     // removes items from the cart on the backend
     const removeHandler = (i) => {
         setLoading(true)
-        axios.put('/removeCartItem', {
+        axios.put('https://retrobackend.herokuapp.com/removeCartItem', {
             cartId: cartId,
             index: i,
             username: user.username

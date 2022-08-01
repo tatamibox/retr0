@@ -10,7 +10,7 @@ const UserProfile = () => {
     const { username } = useParams();
 
     useEffect(() => {
-        axios.post('http://localhost:3001/findByUser', {
+        axios.post('https://retrobackend.herokuapp.com/findByUser', {
             username: username
         })
             .then((res) => {

@@ -23,7 +23,7 @@ const Product = () => {
                 .then((res) => {
                     axios.post('/userinfo', { localId: res.data.users[0].localId })
                         .then((res) => {
-                            axios.post('/addToCart', {
+                            axios.post('https://retrobackend.herokuapp.com/addToCart', {
                                 id: id,
                                 username: res.data.username
                             })

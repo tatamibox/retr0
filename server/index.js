@@ -1,12 +1,11 @@
 const catchAsync = require('./utils/catchAsync');
 const express = require('express');
 const app = express();
-const axios = require('axios');
 const User = require('./models/User')
 const Product = require('./models/Product')
 const Comment = require('./models/Comment')
 const Cart = require('./models/Cart')
-
+const PORT = process.env.PORT || 3001
 const dotenv = require('dotenv');
 require('dotenv').config();
 const cors = require('cors');
@@ -28,7 +27,7 @@ mongoose.connect(process.env.MONGODB_URI)
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.listen(3001, () => {
+app.listen(PORT, () => {
     console.log('Server listening on port 3001')
 })
 

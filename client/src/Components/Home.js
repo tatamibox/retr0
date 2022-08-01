@@ -14,7 +14,7 @@ const Home = () => {
     const [productCounter, setProductCounter] = useState(16)
     const [latestProducts, setLatestProducts] = useState([])
     useEffect(() => {
-        axios.post('/latestProducts', { productCounter: productCounter })
+        axios.post('https://retrobackend.herokuapp.com/latestProducts', { productCounter: productCounter })
             .then(res => setLatestProducts(res.data))
     }, [])
 

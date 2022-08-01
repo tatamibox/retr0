@@ -9,7 +9,7 @@ const ShopQuery = () => {
 
     const { search } = useParams();
     useEffect(() => {
-        axios.post('/filterProducts', { query: search })
+        axios.post('https://retrobackend.herokuapp.com/filterProducts', { query: search })
             .then((res) => {
                 setFilteredProducts(res.data)
             })

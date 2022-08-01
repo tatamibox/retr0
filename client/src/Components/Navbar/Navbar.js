@@ -28,7 +28,7 @@ const Navbar = () => {
             })
                 .then((res) => {
                     const localId = (res.data.users[0].localId)
-                    axios.post('http://localhost:3001/userInfo', { localId: localId })
+                    axios.post('https://retrobackend.herokuapp.com/userInfo', { localId: localId })
                         .then((res) => {
                             setVerifiedUser(res.data.verified)
                             setCurrentUser(res.data.username)
@@ -55,7 +55,13 @@ const Navbar = () => {
     return (
         <Fragment>
             <nav className={styles.navbar__container}>
-                <div className={`${styles.logo}`}><a className={styles.logo} href="/">retr0</a></div><button onClick={burgerHandler} className={styles.burger__open}>x</button>
+                <div className={`${styles.logo}`}><a className={styles.logo} href="/">retr0</a></div><button onClick={burgerHandler} className={`${styles.burger__open} btn btn-light`}>
+                    <svg viewBox="0 0 100 80" width="40" height="40">
+                        <rect width="100" height="20"></rect>
+                        <rect y="30" width="100" height="20"></rect>
+                        <rect y="60" width="100" height="20"></rect>
+                    </svg>
+                </button>
                 <form className={styles.search__form}>
                     <input ref={searchRef} type='text' className={`${styles.search__bar}`} placeholder='Search'></input>
                     <button className='btn btn-outline-dark' type="submit" onClick={submitHandler}>Search</button>
