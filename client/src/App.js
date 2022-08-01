@@ -9,6 +9,7 @@ import Shop from './Components/Routes/Shop/Shop'
 import Product from './Components/Routes/Product/Product';
 import Cart from './Components/Routes/Cart/Cart';
 import SignUp from './Components/Routes/SignUp/SignUp';
+import Testing from './Components/Testing/Testing';
 import Post from './Components/Post/Post';
 import './App.css';
 
@@ -34,6 +35,7 @@ function App() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/shop/:search" element={<ShopQuery />} />
           <Route path='/cart' element={<Cart />} />
+          <Route path='/testing' element={<Testing />} />
         </Routes>
       </Router>
     </>

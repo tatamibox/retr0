@@ -19,7 +19,7 @@ const Shop = () => {
                 setProducts(res.data)
                 setFilteredProducts(res.data)
             })
-    }, [])
+    }, [productCounter])
 
     const handleFilter = () => {
         if (filterRef.current.value === 'all') { setFilteredProducts(products) }
@@ -59,7 +59,7 @@ const Shop = () => {
 
             </div>
             <div className='d-flex justify-content-center'>
-                <button className='btn btn-outline-dark'>Load More</button>
+                <button onClick={() => setProductCounter(productCounter + 5)} className='btn btn-outline-dark'>Load More</button>
             </div>
         </>
     )
