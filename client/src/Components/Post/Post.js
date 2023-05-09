@@ -43,12 +43,12 @@ const Post = () => {
                     })
                         .then((res) => {
                             const localId = (res.data.users[0].localId)
-                            axios.post('https://retrobackend.herokuapp.com/userInfo', {
+                            axios.post('https://retr0-server.vercel.app/userInfo', {
                                 localId: localId
                             })
                                 .then((res) => {
 
-                                    axios.post('https://retrobackend.herokuapp.com/uploadProduct', {
+                                    axios.post('https://retr0-server.vercel.app/uploadProduct', {
                                         username: res.data.username,
                                         product: product,
                                         imageURL: downloadURL,

@@ -28,7 +28,7 @@ const Navbar = () => {
             })
                 .then((res) => {
                     const localId = (res.data.users[0].localId)
-                    axios.post('https://retrobackend.herokuapp.com/userInfo', { localId: localId })
+                    axios.post('https://retr0-server.vercel.app/userInfo', { localId: localId })
                         .then((res) => {
                             setVerifiedUser(res.data.verified)
                             setCurrentUser(res.data.username)

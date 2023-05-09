@@ -12,7 +12,7 @@
 .env
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
-firebase.js
+
 # Mono auto generated files
 mono_crash.*
 

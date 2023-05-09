@@ -14,7 +14,7 @@ const Shop = () => {
     const [products, setProducts] = useState([])
     const [filteredProducts, setFilteredProducts] = useState([])
     useEffect(() => {
-        axios.post('https://retrobackend.herokuapp.com/latestProducts', { productCounter: productCounter })
+        axios.post('https://retr0-server.vercel.app/latestProducts', { productCounter: productCounter })
             .then((res) => {
                 setProducts(res.data)
                 setFilteredProducts(res.data)

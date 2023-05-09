@@ -21,9 +21,9 @@ const Product = () => {
                 idToken: authCtx.token
             })
                 .then((res) => {
-                    axios.post('/userinfo', { localId: res.data.users[0].localId })
+                    axios.post('https://retr0-server.vercel.app/userinfo', { localId: res.data.users[0].localId })
                         .then((res) => {
-                            axios.post('https://retrobackend.herokuapp.com/addToCart', {
+                            axios.post('https://retr0-server.vercel.app/addToCart', {
                                 id: id,
                                 username: res.data.username
                             })
@@ -47,17 +47,17 @@ const Product = () => {
     const [newComment, setNewComment] = useState(0)
     const { id } = useParams();
     useEffect(() => {
-        axios.post('http://localhost:3001/getProduct', { id: id })
+        axios.post('https://retr0-server.vercel.app/getProduct', { id: id })
             .then((res) => {
                 setCurrentProduct(res.data)
             })
     }, [])
     useEffect(() => {
-        axios.post('/getProduct', { id: id })
+        axios.post('https://retr0-server.vercel.app/getProduct', { id: id })
             .then((res) => {
                 const commentsArray = res.data.comments.reverse().splice(0, (commentAmount))
 
-                axios.post('/getComment', { comments: commentsArray })
+                axios.post('https://retr0-server.vercel.app/getComment', { comments: commentsArray })
                     .then((res) => {
                         setProductComments(res.data)
                     })
